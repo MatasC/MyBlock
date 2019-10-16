@@ -2,31 +2,18 @@
 
 int main()
 {
-	std::random_device r;
-	std::default_random_engine el(r());
-	std::uniform_int_distribution<int> uniform_dist(1, 1000);
-	int amount = 0, x, y;
-
+	MyChain Blocky = MyChain();
 	vector <User> vartotojai;
 	vector <Transaction> Visos;
 	skaitymas(vartotojai);
 
-	while (Visos.size() != 10000)
+	int start = 0, end = 100;
+	while (end <= 10000)
 	{
-		amount = uniform_dist(el);
-		x = uniform_dist(el) - 1;
-		do
-		{
-			y = uniform_dist(el) - 1;
-
-		} while(x == y);
-		
-		if (vartotojai[x].GetBling() >= amount)
-			Trans(vartotojai[x], vartotojai[y], amount, Visos);
+		kurimas(vartotojai, Visos);
+		Blocky.AddBlock(MyBlock(1, "Block 1 Data"), Visos);
+		start += 100;
+		end += 100;
+		Visos.clear();
 	}
-	for (auto i : Visos)
-	{
-		cout << i.GetFrom() << " " << i.GetTo() << " " << i.GetAmount() << endl;
-	}
-
 }

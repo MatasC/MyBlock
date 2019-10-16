@@ -4,6 +4,7 @@ MyBlock::MyBlock(uint32_t IndexIn, const string &DataIn) : Index_(IndexIn), Data
 {
 	Nonce_ = -1;
 	Time_ = time(nullptr);
+	Info_.reserve(100);
 }
 
 string MyBlock::GetHash()
@@ -11,7 +12,7 @@ string MyBlock::GetHash()
 	return Hash_;
 }
 
-void MyBlock::MineBlock(uint32_t Difficulty)
+void MyBlock::MineBlock(uint32_t Difficulty, vector<Transaction>& temp)
 {
 	char cstr[Difficulty + 1];
 	for(uint32_t i = 0; i < Difficulty; i++)
@@ -27,7 +28,7 @@ void MyBlock::MineBlock(uint32_t Difficulty)
 		Nonce_++;
 		Hash_ = CalculateHash();
 	} while (Hash_.substr(0, Difficulty) != str);
-
+	Info_ = temp;
 	cout << "MyBlock mined: " << Hash_ << endl;
 }
 

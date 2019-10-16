@@ -23,6 +23,33 @@ using std::stringstream;
 
 //classes
 
+class Transaction
+{
+public:
+	Transaction();
+
+	void SetTransaction(int amount, string from, string to);
+
+	int GetAmount() const
+	{
+		return amount_;
+	}
+	string GetFrom() const
+	{
+		return from_;
+	}
+	string GetTo() const
+	{
+		return to_;
+	}
+
+private:
+
+	string from_;
+	string to_;
+	int amount_;
+};
+
 class MyBlock
 {
 public:
@@ -32,7 +59,14 @@ public:
 
 	string GetHash();
 
-	void MineBlock(uint32_t Difficulty);
+	void MineBlock(uint32_t Difficulty, vector<Transaction>& temp);
+	void AddInfo(int start, int end, vector <Transaction> Trans)
+	{
+		for(int i = start; i < end; i++)
+		{
+			Info_.push_back(Trans[i]);
+		}
+	}
 
 private:
 	uint32_t Index_;
@@ -40,7 +74,7 @@ private:
 	string Data_;
 	string Hash_;
 	time_t Time_;
-
+	vector <Transaction> Info_;
 	string CalculateHash() const;
 };
 
@@ -49,7 +83,7 @@ class MyChain
 public:
 	MyChain();
 
-	void AddBlock(MyBlock New);
+	void AddBlock(MyBlock New, vector<Transaction>& temp);
 
 private:
 	uint32_t Difficulty_;
@@ -93,37 +127,11 @@ private:
 
 };
 
-class Transaction
-{
-public:
-	Transaction();
-
-	void SetTransaction(int amount, string from, string to);
-
-	int GetAmount() const
-	{
-		return amount_;
-	}
-	string GetFrom() const
-	{
-		return from_;
-	}
-	string GetTo() const
-	{
-		return to_;
-	}
-
-private:
-
-	string from_;
-	string to_;
-	int amount_;
-};
-
 //functions
 
 string Convertion(char[]);
 void skaitymas(vector <User> &Users);
 void Trans(User x, User y, int amount, vector <Transaction>& AllTrans);
+void kurimas(vector <User>& vartotojai, vector <Transaction> Visos);
 
 #endif
