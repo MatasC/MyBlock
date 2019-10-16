@@ -7,6 +7,10 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <sstream>
+#include <fstream>
+#include<random>
+#include "sha256.h"
 
 //namespace
 
@@ -14,7 +18,8 @@ using std::cin;
 using std::cout;
 using std::endl;
 using std::string;
-using std::vector
+using std::vector;
+using std::stringstream;
 
 //classes
 
@@ -52,5 +57,73 @@ private:
 
 	MyBlock GetLastBlock() const;
 };
+
+class User
+{
+public:
+	User();
+
+	void irasymas(std::istringstream& skaitymas);
+
+	string GetName() const
+	{
+		return name_;
+	}
+	string GetKey() const
+	{
+		return public_key;
+	}
+
+	int GetBling() const
+	{
+		return bling_;
+	}
+
+	void SetBling(int temp)
+	{
+		bling_ = temp;
+	}
+
+private:
+
+	string name_;
+	string surname_;
+	string public_key;
+	int bling_;
+
+};
+
+class Transaction
+{
+public:
+	Transaction();
+
+	void SetTransaction(int amount, string from, string to);
+
+	int GetAmount() const
+	{
+		return amount_;
+	}
+	string GetFrom() const
+	{
+		return from_;
+	}
+	string GetTo() const
+	{
+		return to_;
+	}
+
+private:
+
+	string from_;
+	string to_;
+	int amount_;
+};
+
+//functions
+
+string Convertion(char[]);
+void skaitymas(vector <User> &Users);
+void Trans(User x, User y, int amount, vector <Transaction>& AllTrans);
 
 #endif
