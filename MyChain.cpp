@@ -1,15 +1,22 @@
 #include "header.h"
 
-MyChain::MyChain() 
+MyChain::MyChain()
 {
-	Chain_.emplace_back(MyBlock(0, "Genesis Block"));
+	vector<Transaction> Genesis;
+
+	for (int i = 0; i < 100; i++)
+	{
+		Genesis.push_back(Transaction());
+		Genesis[i].SetTransaction(1, "Genesis", "Genesis");
+	}
+
+	Chain_.emplace_back(MyBlock(1, Genesis));
 	Difficulty_ = 3;
 }
 
-void MyChain::AddBlock(MyBlock New, vector<Transaction>& temp)
+void MyChain::AddBlock(MyBlock New)
 {
 	New.prev_ = GetLastBlock().GetHash();
-	New.MineBlock(Difficulty_, temp);
 	Chain_.push_back(New);
 }
 

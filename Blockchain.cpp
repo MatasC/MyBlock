@@ -5,15 +5,28 @@ int main()
 	MyChain Blocky = MyChain();
 	vector <User> vartotojai;
 	vector <Transaction> Visos;
+	vector <Transaction> Atrinktos;
 	skaitymas(vartotojai);
 
-	int start = 0, end = 100;
-	while (end <= 10000)
+	uint32_t index = 2;
+
+	bool error = false, found = false;
+
+	kurimas(vartotojai, Visos);
+
+	while (Visos.size() > 0)
 	{
-		kurimas(vartotojai, Visos);
-		Blocky.AddBlock(MyBlock(1, "Block 1 Data"), Visos);
-		start += 100;
-		end += 100;
-		Visos.clear();
+		for (int i = 0; i < 5; i++)
+		{
+			BlokoKurimas(Visos, Blocky, index, found);
+			if (found)
+			{
+				index++;
+				break;
+			}
+		}
+		if (!found)
+			cout << "Nepavyko iskasti naujo bloko" << endl;
+		found = false;
 	}
 }

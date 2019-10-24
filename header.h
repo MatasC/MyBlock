@@ -9,7 +9,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
-#include<random>
+#include <random>
 #include "sha256.h"
 
 //namespace
@@ -20,6 +20,10 @@ using std::endl;
 using std::string;
 using std::vector;
 using std::stringstream;
+
+//define
+
+#define MaxNonce 1000
 
 //classes
 
@@ -34,17 +38,26 @@ public:
 	{
 		return amount_;
 	}
+
 	string GetFrom() const
 	{
 		return from_;
 	}
+
 	string GetTo() const
 	{
 		return to_;
 	}
 
+	string GetID() const
+	{
+		return ID_;
+	}
+
+
 private:
 
+	string ID_;
 	string from_;
 	string to_;
 	int amount_;
@@ -55,26 +68,24 @@ class MyBlock
 public:
 	string prev_;
 
-	MyBlock(uint32_t IndexIn, const string &DataIn);
+	MyBlock(uint32_t IndexIn, vector<Transaction> &DataIn);
 
 	string GetHash();
 
-	void MineBlock(uint32_t Difficulty, vector<Transaction>& temp);
-	void AddInfo(int start, int end, vector <Transaction> Trans)
+	int64_t GetNonce() const
 	{
-		for(int i = start; i < end; i++)
-		{
-			Info_.push_back(Trans[i]);
-		}
+		return Nonce_;
 	}
+
+	void MineBlock(uint32_t Difficulty);
+
 
 private:
 	uint32_t Index_;
 	int64_t Nonce_;
-	string Data_;
+	vector<Transaction> Data_;
 	string Hash_;
 	time_t Time_;
-	vector <Transaction> Info_;
 	string CalculateHash() const;
 };
 
@@ -83,7 +94,12 @@ class MyChain
 public:
 	MyChain();
 
-	void AddBlock(MyBlock New, vector<Transaction>& temp);
+	void AddBlock(MyBlock New);
+
+	uint32_t GetDiff() const
+	{
+		return Difficulty_;
+	}
 
 private:
 	uint32_t Difficulty_;
@@ -132,6 +148,8 @@ private:
 string Convertion(char[]);
 void skaitymas(vector <User> &Users);
 void Trans(User x, User y, int amount, vector <Transaction>& AllTrans);
-void kurimas(vector <User>& vartotojai, vector <Transaction> Visos);
+void kurimas(vector <User>& vartotojai, vector <Transaction>& Visos);
+void atrinkimas(vector <Transaction>& Visos, vector <Transaction>& Atrinktos);
+void BlokoKurimas(vector<Transaction>& Visos, MyChain& Blocky, uint32_t& index, bool& found);
 
 #endif

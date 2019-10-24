@@ -34,7 +34,7 @@ void skaitymas(vector <User> &Users)
 	in.close();
 }
 
-void kurimas(vector <User>& vartotojai, vector <Transaction> Visos)
+void kurimas(vector <User>& vartotojai, vector <Transaction>& Visos)
 {
 	std::random_device r;
 	std::default_random_engine el(r());
@@ -42,7 +42,7 @@ void kurimas(vector <User>& vartotojai, vector <Transaction> Visos)
 
 	int amount = 0, x, y;
 
-	while (Visos.size() != 100)
+	while (Visos.size() != 10000)
 	{
 		amount = uniform_dist(el);
 		x = uniform_dist(el) - 1;
@@ -54,5 +54,105 @@ void kurimas(vector <User>& vartotojai, vector <Transaction> Visos)
 
 		if (vartotojai[x].GetBling() >= amount)
 			Trans(vartotojai[x], vartotojai[y], amount, Visos);
+	}
+}
+
+void atrinkimas(vector <Transaction>& Visos, vector <Transaction>& Atrinktos)
+{
+	std::random_device r;
+	std::default_random_engine el(r());
+	std::uniform_int_distribution<int> uniform_dist(0, Visos.size() - 1);
+
+	int x;
+
+	bool error = false;
+
+	vector <Transaction> temp;
+
+	while (Atrinktos.size() != 100)
+	{
+		x = uniform_dist(el);
+		for (int i = 0; i < temp.size(); i++)
+		{
+			if (temp[i].GetID() == Visos[x].GetID())
+			{
+				error = true;
+				break;
+			}
+		}
+		if (!error)
+		{
+			Atrinktos.push_back(Visos[x]);
+			temp.push_back(Visos[x]);
+		}
+		else
+			error = false;
+	}
+}
+
+void BlokoKurimas(vector<Transaction>& Visos, MyChain& Blocky, uint32_t& index, bool& found)
+{
+fail:
+	vector<Transaction> A;
+	atrinkimas(Visos, A);
+	bool error = false;
+	int k = 0;
+	string test;
+	for (int i = 0; i < A.size(); i++)
+	{
+		stringstream ss;
+		ss << A[i].GetFrom() << A[i].GetTo() << A[i].GetAmount();
+		test = sha256(ss.str());
+		if (A[i].GetID() == test)
+			k++;
+	}
+
+	if (k < A.size())
+	{
+		error = true;
+	}
+	if (error)
+	{
+		cout << "Sugadinta tranakcija" << endl;
+		error = false;
+		goto fail;
+	}
+
+	MyBlock B(index, A);
+	while (B.GetNonce() != MaxNonce)
+	{
+		B.MineBlock(Blocky.GetDiff());
+
+		char cstr[Blocky.GetDiff() + 1];
+		for (uint32_t i = 0; i < Blocky.GetDiff(); i++)
+		{
+			cstr[i] = '0';
+		}
+		cstr[Blocky.GetDiff()] = '\0';
+
+		string str(cstr);
+
+		if (B.GetHash().substr(0, Blocky.GetDiff()) == str)
+		{
+			Blocky.AddBlock(B);
+
+			found = true;
+
+
+			for (int i = 0; i < 100; i++)
+			{
+				for (int w = 0; w < Visos.size(); w++)
+				{
+					if (A[i].GetID() == Visos[w].GetID())
+					{
+						Visos.erase(Visos.begin() + w);
+						w--;
+						break;
+					}
+				}
+			}
+			cout << "MyBlock mined from B: " << B.GetHash() << endl;
+			break;
+		}
 	}
 }
