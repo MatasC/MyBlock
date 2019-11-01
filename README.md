@@ -14,7 +14,7 @@ Pataisymai:
 -Blockchain išpildymas pataisytas pagal reikalavimus.  
 -Transakcijų pool'o išpildymas atliktas taip, kad transakcija būtų patikrinta prieš patekdama į pool'ą.  
 
-###[v0.2.1](https://github.com/MatasC/MyBlock/releases/tag/v0.2.1) - (2019-10-25)
+### [v0.2.1](https://github.com/MatasC/MyBlock/releases/tag/v0.2.1) - (2019-10-25)
 Pataisymai:  
 - Transakcijų pool'o išpildymas pataisytas, kad būtų galima atlikti validumo patikrinimą po transakcijos patekimo į pool'ą.  
 - Blockchain gali sukurti bloką net jeigu nėra 100 transakcijų (maksimalus leistinas tranksakcijų skaičius viename bloke).  
