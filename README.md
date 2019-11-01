@@ -19,5 +19,5 @@ Pataisymai:
 - Transakcijų pool'o išpildymas pataisytas, kad būtų galima atlikti validumo patikrinimą po transakcijos patekimo į pool'ą.  
 - Blockchain gali sukurti bloką net jeigu nėra 100 transakcijų (maksimalus leistinas tranksakcijų skaičius viename bloke).  
 - Padidinta minimali pervedimo suma transakcijoje tam, kad būtų didesnė tikimybė sukurti nevalidžią transakciją (Pervedamų pinigų suma didesnė nei sąskaitos likutis).
-###[v0.3] - (2029-11-1)
+### [v0.3] - (2029-11-1)
 Nuosavame kompiuteryje įdiegtas Bitcoin core realizacija (dėl užimamos vietos to nepavyko atlikti darbiniame laptope).  
