@@ -18,6 +18,8 @@ Pataisymai:
 Pataisymai:  
 - Transakcijų pool'o išpildymas pataisytas, kad būtų galima atlikti validumo patikrinimą po transakcijos patekimo į pool'ą.  
 - Blockchain gali sukurti bloką net jeigu nėra 100 transakcijų (maksimalus leistinas tranksakcijų skaičius viename bloke).  
-- Padidinta minimali pervedimo suma transakcijoje tam, kad būtų didesnė tikimybė sukurti nevalidžią transakciją (Pervedamų pinigų suma didesnė nei sąskaitos likutis).
-### v0.3 - (2029-11-1)
-Nuosavame kompiuteryje įdiegtas Bitcoin core realizacija (dėl užimamos vietos to nepavyko atlikti darbiniame laptope).  
+- Padidinta minimali pervedimo suma transakcijoje tam, kad būtų didesnė tikimybė sukurti nevalidžią transakciją (Pervedamų pinigų suma didesnė nei sąskaitos likutis).  
+
+### [v0.3](https://github.com/MatasC/MyBlock/releases/tag/v0.3) - (2019-11-18)
+Pridėta:  
+- ``Merkel tree hash`` sukūrimo funkcija. Funkcija skaičiavimus atlieka principu, kuris buvo pateiktas paskaitos skaidrėse (tačiau buvo pritaikyta MyBlock kodo ir veikimo principui).  
